@@ -2,8 +2,6 @@
 
 A Retrieval-Augmented Generation (RAG) system that loads PDF documents, generates vector embeddings, stores them in ChromaDB, and answers queries using Groq-hosted LLMs.
 
-> **Status:** Scaffolding phase — dependencies and configuration are in place. The core RAG pipeline is yet to be implemented.
-
 ## Tech Stack
 
 | Component | Technology |
@@ -24,46 +22,70 @@ A Retrieval-Augmented Generation (RAG) system that loads PDF documents, generate
 ## Setup
 
 ```bash
-# Clone the repository
 git clone <repo-url>
 cd basic-rag
 
-# Create and activate virtual environment
 uv venv
 .venv\Scripts\activate   # Windows
 # source .venv/bin/activate  # macOS/Linux
 
-# Install dependencies
 uv sync
 ```
 
-Configure environment variables in `.env` (a working Groq API key is already provided).
+Configure environment variables in `.env`.
 
 ## Usage
 
+### 1. Ingest documents
+
+```bash
+uv run ingest.py
+```
+
+Loads PDFs from `data/`, splits into chunks, and creates a ChromaDB vector store.
+
+### 2. Run the chatbot
+
+**CLI:**
 ```bash
 uv run main.py
 ```
 
-Currently the entry point is a placeholder. The intended pipeline: load a PDF → split into chunks → embed → store in ChromaDB → retrieve relevant chunks → generate answers via Groq.
+**Web UI (Streamlit):**
+```bash
+uv run streamlit run app.py
+```
 
 ## Project Structure
 
 ```
 basic-rag/
-├── main.py              # Entry point (WIP)
+├── app.py                # Streamlit web UI
+├── ingest.py             # Vector database builder
+├── main.py               # CLI chatbot
 ├── rag/
-│   └── config.py        # Environment config loader
+│   ├── config.py         # Environment config loader
+│   ├── embeddings.py     # HuggingFace embedding model
+│   ├── llm.py            # Groq LLM setup
+│   ├── loader.py         # PDF document loader
+│   ├── prompt.py         # RAG prompt template
+│   ├── rag_chain.py      # Retriever + LLM chain
+│   ├── retriever.py      # Vector store retriever
+│   ├── splitter.py       # Document chunking
+│   └── vector_store.py   # ChromaDB integration
 ├── data/
-│   └── healthcare_long.pdf  # Sample PDF document
-├── chroma_db/           # Auto-generated vector store
-├── pyproject.toml       # Project metadata & dependencies
-├── uv.lock              # Dependency lockfile
-└── .env                 # Environment variables
+│   ├── healthcare_long.pdf
+│   └── hospital_policy.pdf
+├── chroma_db/            # Auto-generated vector store
+├── pyproject.toml
+├── uv.lock
+└── .env
 ```
 
 ## Customisation
 
-- **Replace the PDF:** Drop your own PDFs into `data/` and update the loader path in `main.py`.
+- **Replace PDFs:** Drop your own PDFs into `data/`.
 - **Change the LLM:** Update `MODEL_NAME` in `.env`.
 - **Change the embedding model:** Update `EMBEDDING_MODEL` in `.env`.
+- **Adjust chunk size:** Edit `chunk_size` and `chunk_overlap` in `rag/splitter.py`.
+- **Retrieval count:** Change `k` in `rag/retriever.py`.

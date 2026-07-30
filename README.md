@@ -2,6 +2,58 @@
 
 A Retrieval-Augmented Generation (RAG) system that loads PDF documents, generates vector embeddings, stores them in ChromaDB, and answers queries using Groq-hosted LLMs.
 
+## How RAG Works
+
+### Ingestion Phase
+
+```
+PDF Documents
+     │
+     ▼
+ ┌─────────────┐
+ │   Loader    │  PyPDFLoader
+ └──────┬──────┘
+        │
+        ▼
+ ┌─────────────┐
+ │  Splitter   │  RecursiveCharacterTextSplitter (chunk_size=500, overlap=100)
+ └──────┬──────┘
+        │
+        ▼
+ ┌─────────────┐
+ │ Embeddings  │  all-MiniLM-L6-v2 → vector embeddings
+ └──────┬──────┘
+        │
+        ▼
+ ┌─────────────┐
+ │  ChromaDB   │  Persistent vector store
+ └─────────────┘
+```
+
+### Query Phase
+
+```
+User Question
+     │
+     ▼
+ ┌─────────────┐
+ │  Retriever  │  Find top-3 similar chunks in ChromaDB
+ └──────┬──────┘
+        │
+        ▼
+ ┌─────────────┐
+ │  Context    │  Retrieved chunks + original question
+ └──────┬──────┘
+        │
+        ▼
+ ┌─────────────┐
+ │  LLM (Groq) │  llama-3.3-70b-versatile generates answer
+ └──────┬──────┘
+        │
+        ▼
+    Answer
+```
+
 ## Tech Stack
 
 | Component | Technology |

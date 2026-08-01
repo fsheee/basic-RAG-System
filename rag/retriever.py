@@ -1,4 +1,4 @@
-from rag.vector_store import load_vector_store
+from rag.vector_store import ensure_vector_store
 
 
 def get_retriever():
@@ -6,8 +6,9 @@ def get_retriever():
     Load the Chroma vector store and create a retriever.
     """
 
-    # Load the existing Chroma vector database
-    vector_store = load_vector_store()
+    # Load the existing Chroma vector database (building it from data/ PDFs
+    # first if it is missing or empty, e.g. on a fresh Streamlit Cloud deploy)
+    vector_store = ensure_vector_store()
 
     # Create a retriever that returns the top 3 matching documents
     retriever = vector_store.as_retriever(

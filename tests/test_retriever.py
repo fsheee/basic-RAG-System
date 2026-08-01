@@ -5,18 +5,18 @@ from langchain_core.documents import Document
 from rag.retriever import get_retriever, retrieve_documents
 
 
-@patch("rag.retriever.load_vector_store")
-def test_get_retriever_top_k_is_three(mock_load):
-    mock_store = mock_load.return_value
+@patch("rag.retriever.ensure_vector_store")
+def test_get_retriever_top_k_is_three(mock_ensure):
+    mock_store = mock_ensure.return_value
 
     get_retriever()
 
     mock_store.as_retriever.assert_called_once_with(search_kwargs={"k": 3})
 
 
-@patch("rag.retriever.load_vector_store")
-def test_get_retriever_returns_retriever(mock_load):
-    mock_store = mock_load.return_value
+@patch("rag.retriever.ensure_vector_store")
+def test_get_retriever_returns_retriever(mock_ensure):
+    mock_store = mock_ensure.return_value
 
     result = get_retriever()
 

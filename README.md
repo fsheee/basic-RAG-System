@@ -114,6 +114,8 @@ uv run main.py
 ```bash
 uv run streamlit run app.py
 ```
+[**Deployed UI (streamlit)**] (https://basic-rag-system-gi9lvzkrumzqvy7ayhlbr8.streamlit.app/)
+
 
 ## Project Structure
 

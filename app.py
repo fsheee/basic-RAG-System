@@ -2,7 +2,7 @@
 
 import streamlit as st
 
-from rag.retriever import retrieve_documents
+from rag.retriever import  get_retriever, retrieve_documents
 from rag.rag_chain import generate_response
 
 

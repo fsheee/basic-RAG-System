@@ -2,6 +2,13 @@
 
 A Retrieval-Augmented Generation (RAG) system that loads PDF documents, generates vector embeddings, stores them in ChromaDB, and answers queries using Groq-hosted LLMs.
 
+## How It Works
+
+1. **Ingest** (`ingest.py`) — loads PDFs from `data/`, splits them into chunks, embeds each chunk, and stores them in a persistent ChromaDB vector store (`chroma_db/`).
+2. **Ask** — you enter a question in the Streamlit UI (`app.py`) or CLI (`main.py`).
+3. **Retrieve** — the retriever embeds your question and finds the 3 most similar chunks in ChromaDB.
+4. **Generate** — the prompt wraps the retrieved chunks as context and sends them with your question to the Groq LLM, which answers using only that context.
+
 ## How RAG Works
 
 ### Ingestion Phase

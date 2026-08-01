@@ -26,3 +26,25 @@ def get_rag_chain():
     )
 
     return rag_chain
+
+
+def generate_response(query, documents):
+    """
+    Generate an answer using the given query and documents.
+    """
+
+    llm = get_llm()
+
+    document_chain = create_stuff_documents_chain(
+        llm,
+        RAG_PROMPT
+    )
+
+    response = document_chain.invoke(
+        {
+             "context": documents,
+             "input": query 
+        }
+    )
+
+    return response

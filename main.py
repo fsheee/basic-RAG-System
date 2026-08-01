@@ -1,3 +1,5 @@
+import rag.config  # noqa: F401  (sets HF offline mode before heavy imports)
+
 from rag.rag_chain import get_rag_chain
 
 

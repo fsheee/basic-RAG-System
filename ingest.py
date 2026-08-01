@@ -1,3 +1,5 @@
+import rag.config  # noqa: F401  (sets HF offline mode before heavy imports)
+
 from rag.loader import load_documents
 from rag.splitter import split_documents
 from rag.vector_store import create_vector_store

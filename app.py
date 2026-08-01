@@ -1,5 +1,7 @@
 # app.py
 
+import rag.config  # noqa: F401  (must be imported before streamlit: sets HF offline mode)
+
 import streamlit as st
 
 from rag.retriever import  get_retriever, retrieve_documents

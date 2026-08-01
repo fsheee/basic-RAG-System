@@ -1,2 +1,2 @@
 [server]
-watchModules = false
+fileWatcherType = "none"

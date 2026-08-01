@@ -1,4 +1,4 @@
-# basic-rag
+# Basic-RAG-SYSTEM
 
 A Retrieval-Augmented Generation (RAG) system that loads PDF documents, generates vector embeddings, stores them in ChromaDB, and answers queries using Groq-hosted LLMs.
 
